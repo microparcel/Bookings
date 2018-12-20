@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/create_order_menu"
+        android:icon="@drawable/ic_local_shipping_black_24dp"
+        android:title="@string/create_order" />
+    <item
+        android:id="@+id/your_orders_menu"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/your_orders" />
+    <item
+        android:id="@+id/settings_menu"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings" />
+</menu>

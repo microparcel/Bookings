@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardView_signup"
         android:layout_width="0dp"
         android:layout_height="56dp"
         app:cardElevation="10dp"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/app_name_TextView"
+                android:id="@+id/app_name_TextView_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -42,44 +42,42 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/client_login_title"
+        android:id="@+id/client_signup_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/client_login"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <TextView
-        android:id="@+id/email_title_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="@string/email"
-        app:layout_constraintBottom_toTopOf="@+id/client_email_EditText"
-        app:layout_constraintStart_toStartOf="@+id/client_email_EditText" />
-
-    <EditText
-        android:id="@+id/client_email_EditText"
-        android:layout_width="315dp"
-        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:padding="5dp"
+        android:textSize="25sp"
+        android:text="CLIENT SIGNUP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_signup" />
+
+    <TextView
+        android:id="@+id/signup_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="Email"
+        app:layout_constraintBottom_toTopOf="@+id/signup_email_EditText"
+        app:layout_constraintStart_toStartOf="@+id/signup_email_EditText" />
+
+    <EditText
+        android:id="@+id/signup_email_EditText"
+        android:layout_width="315dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/nogravity_border_primary"
         android:ems="10"
         android:hint="@string/email_example_com"
-        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
         android:paddingTop="5dp"
@@ -87,20 +85,20 @@
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_login_title"
-        tools:targetApi="o" />
+        app:layout_constraintTop_toBottomOf="@+id/client_signup_title" />
 
     <TextView
-        android:id="@+id/client_password_title_TextView"
+        android:id="@+id/signup_password_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
-        android:text="@string/password_dt"
-        app:layout_constraintBottom_toTopOf="@+id/client_password_EditText"
-        app:layout_constraintStart_toStartOf="@+id/client_password_EditText" />
+        android:text="Password"
+
+        app:layout_constraintBottom_toTopOf="@+id/signup_password_EditText"
+        app:layout_constraintStart_toStartOf="@+id/signup_password_EditText" />
 
     <EditText
-        android:id="@+id/client_password_EditText"
+        android:id="@+id/signup_password_EditText"
         android:layout_width="315dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
@@ -108,52 +106,107 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/nogravity_border_primary"
         android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingLeft="15dp"
         android:paddingTop="5dp"
-        android:paddingRight="15dp"
         android:paddingBottom="5dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:hint="@string/password"
+        android:background="@drawable/nogravity_border_primary"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_email_EditText"
-        android:importantForAutofill="no" tools:targetApi="o" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_email_EditText" />
 
-    <Button
-        android:id="@+id/client_login_Button"
+    <EditText
+        android:id="@+id/signup_name_EditText"
         android:layout_width="315dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/nogravity_border_primary"
+        android:hint="Ex. Somil Jain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_password_EditText" />
+
+    <TextView
+        android:id="@+id/signup_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginBottom="2dp"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/signup_name_EditText"
+        app:layout_constraintStart_toStartOf="@+id/signup_name_EditText" />
+
+    <TextView
+        android:id="@+id/signup_mobile_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="Mobile Number"
+        app:layout_constraintBottom_toTopOf="@+id/signup_mobile_EditText"
+        app:layout_constraintStart_toStartOf="@+id/signup_mobile_EditText" />
+
+    <EditText
+        android:id="@+id/signup_mobile_EditText"
+        android:layout_width="315dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/nogravity_border_primary"
+        android:hint="Ex. 7697678073"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_name_EditText" />
+
+    <Button
+        android:id="@+id/signup_Button"
+        android:layout_width="315dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/gravity_border_white_primary"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="5dp"
-        android:text="@string/login"
+        android:text="SIGNUP"
         android:textColor="@color/colorWhite"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_password_EditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_mobile_EditText" />
 
     <TextView
-        android:id="@+id/create_new_ac_TextView"
+        android:id="@+id/signup_gotologin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="@string/create_new_account"
+        android:text="Already Have An Account? Login."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/client_login_Button" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_Button" />
 
 </android.support.constraint.ConstraintLayout>
