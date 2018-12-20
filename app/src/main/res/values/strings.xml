@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bookings</string>
+    <string name="mp_logo">mp_logo</string>
+    <string name="the_speed_you_can_t_believe">The Speed You Can\'t Believe</string>
+    <string name="del_boy_logo">del_boy_logo</string>
+    <string name="v1_0_0">v1.0.0</string>
 </resources>
