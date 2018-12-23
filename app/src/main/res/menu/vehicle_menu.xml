@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bike_delivery"
+        android:icon="@drawable/ic_bike_delivery"
+        android:title="@string/bike" />
+    <item
+        android:id="@+id/loading_delivery"
+        android:icon="@drawable/ic_loading_delivery"
+        android:title="@string/loading_rickshaw" />
+    <item
+        android:id="@+id/ace_delivery"
+        android:icon="@drawable/ic_ace_delivery"
+        android:title="@string/tata_ace" />
+    <item
+        android:id="@+id/aldost_delivery"
+        android:icon="@drawable/ic_dost_delivery"
+        android:title="@string/al_dost" />
+    <item
+        android:id="@+id/mpickup_delivery"
+        android:icon="@drawable/ic_pickup_delivery"
+        android:title="@string/m_pickup" />
+</menu>

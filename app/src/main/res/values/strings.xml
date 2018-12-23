@@ -6,7 +6,7 @@
     <string name="v1_0_0">v1.0.0</string>
     <string name="micro_parcel">MICRO PARCEL</string>
     <string name="client_login">CLIENT LOGIN</string>
-    <string name="create_new_account">Create new account...</string>
+    <string name="create_new_account">Create new account…</string>
     <string name="login">Login</string>
     <string name="password">password</string>
     <string name="password_dt">Password</string>
@@ -19,4 +19,27 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_pickup_location">Pickup Location</string>
+    <string name="select_drop_location">Drop Location</string>
+    <string name="you_selected">You Selected</string>
+    <string name="select_vehicle">Select Vehicle</string>
+    <string name="todo">TODO</string>
+    <string name="select_material_type">Select Material Type</string>
+    <string name="bike">Bike</string>
+    <string name="loading_rickshaw">Loading</string>
+    <string name="m_pickup">M Pickup</string>
+    <string name="al_dost">AL Dost</string>
+    <string name="tata_ace">Tata Ace</string>
+    <string name="_0_000_kgs">0.000 KGs</string>
+    <string name="_0ft_0ft_0ft">0Ft x 0Ft x 0Ft</string>
+    <string name="selected_vehicle">Selected Vehicle</string>
+    <string name="arrive_in_2_min">Can Arrive in 2 min</string>
+    <string name="proceed">Proceed</string>
+    <string name="capacity_0_00_tons">Capacity: 0.00 tons</string>
+    <string name="max_height_0_00ft">Height: 0.00ft</string>
+    <string name="max_width_0_00ft">Width: 0.00ft</string>
+    <string name="max_lenght_0_00ft">Lenght: 0.00ft</string>
+    <string name="closed_body">Closed Body</string>
+    <string name="open_body">Open Body</string>
+
 </resources>
