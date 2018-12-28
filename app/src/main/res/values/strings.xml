@@ -41,5 +41,30 @@
     <string name="max_lenght_0_00ft">Lenght: 0.00ft</string>
     <string name="closed_body">Closed Body</string>
     <string name="open_body">Open Body</string>
+    <string name="cancel">Select</string>
+    <string name="bike_cap">Capacity: 30.0 Kgs</string>
+    <string name="bike_height">Height: 25 Inches</string>
+    <string name="bike_width">Width: 15 Inches</string>
+    <string name="bike_length">Length: 20 Inches</string>
+    <string name="bike_del">Delivery Bike</string>
+    <string name="goods_type">Goods Type</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="insurance">Insurance</string>
+    <string name="fare_estimate">FARE ESTIMATE</string>
+    <string name="_0_00">₹ 0.00</string>
+    <string name="rounded_off">Rounded Off</string>
+    <string name="taxes">Taxes</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="carrier_fare">Carrier Fare</string>
+    <string name="total_bill">Total Bill</string>
+    <string name="loading_unloading">Loading/Unloading</string>
+    <string name="insurance_premium">Insurance Premium</string>
+    <string name="total_payable">Total Payable</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="cash_on_pickup">Cash on Pickup</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>
+    <string name="online_payment">Online Payment</string>
+    <string name="select_payment_method_app">Select</string>
+    <string name="proceed_now">Proceed Now</string>
 
 </resources>

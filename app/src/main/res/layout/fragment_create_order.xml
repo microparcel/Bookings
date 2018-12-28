@@ -17,7 +17,11 @@
         <android.support.v7.widget.CardView
             android:id="@+id/pickup_card"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="15dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,21 +31,24 @@
             <TextView
                 android:id="@+id/pickup_location_TextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/nogravity_border_primary"
                 android:gravity="center"
                 android:minHeight="48dp"
                 android:text="@string/select_pickup_location"
-                android:textAlignment="center"
                 android:textColor="@color/colorGreen"
-                android:textSize="20sp" />
+                android:textSize="12sp" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/drop_card"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,21 +58,20 @@
             <TextView
                 android:id="@+id/drop_location_TextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/nogravity_border_primary"
                 android:gravity="center"
                 android:minHeight="48dp"
                 android:text="@string/select_drop_location"
-                android:textAlignment="center"
-                android:textColor="@color/colorRed"
-                android:textSize="20sp" />
+                android:textColor="@color/colorGreen"
+                android:textSize="12sp" />
         </android.support.v7.widget.CardView>
 
         <View
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:background="?android:attr/listDivider"
             android:outlineAmbientShadowColor="@color/colorPrimary"
             android:outlineSpotShadowColor="@color/colorBlack"
@@ -76,7 +82,7 @@
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/vehicle_selector_Bar"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="45dp"
             app:elevation="5dp"
             app:itemIconSize="45dp"
             app:labelVisibilityMode="unlabeled"
@@ -114,22 +120,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <Button
-            android:id="@+id/proceed_Button"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/gravity_border_white_primary"
-            android:text="@string/proceed"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/arrival_time_TextView"
             android:layout_width="wrap_content"
@@ -138,6 +128,118 @@
             app:layout_constraintEnd_toEndOf="@+id/vehicle_name_and_type_TextView"
             app:layout_constraintStart_toStartOf="@+id/vehicle_name_and_type_TextView"
             app:layout_constraintTop_toBottomOf="@+id/vehicle_name_and_type_TextView" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:srcCompat="@drawable/ic_package_for_delivery" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/goods_type"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/payment_method_main_ImageView"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:srcCompat="@drawable/ic_point_of_service" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/payment_method"
+            app:layout_constraintEnd_toEndOf="@+id/payment_method_main_ImageView"
+            app:layout_constraintStart_toStartOf="@+id/payment_method_main_ImageView"
+            app:layout_constraintTop_toBottomOf="@+id/payment_method_main_ImageView" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:srcCompat="@drawable/ic_mover" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/loading_unloading"
+            app:layout_constraintBottom_toTopOf="@+id/fare_estimate_Button"
+            app:layout_constraintEnd_toEndOf="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="128dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:srcCompat="@drawable/ic_contract" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/insurance"
+            app:layout_constraintBottom_toTopOf="@+id/fare_estimate_Button"
+            app:layout_constraintEnd_toEndOf="@+id/imageView5"
+            app:layout_constraintStart_toStartOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/fare_estimate_Button"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/gravity_border_white_primary"
+            android:text="@string/fare_estimate"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/vehicle_imageView"
         android:layout_width="77dp"
         android:layout_height="79dp"
         android:layout_marginStart="8dp"
@@ -51,59 +51,57 @@
         android:text="@string/capacity_0_00_tons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_imageView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/vehicle_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/max_height_0_00ft"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_width"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_width"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_width" />
+
+    <TextView
+        android:id="@+id/vehicle_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/max_width_0_00ft"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_lenght"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_lenght"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_lenght" />
+
+    <TextView
+        android:id="@+id/vehicle_lenght"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/max_lenght_0_00ft"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/vehicle_capacity_TextView"
         app:layout_constraintStart_toStartOf="@+id/vehicle_capacity_TextView"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_capacity_TextView" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/max_width_0_00ft"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/vehicle_capacity_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_capacity_TextView" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/max_lenght_0_00ft"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/vehicle_capacity_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_capacity_TextView" />
-
     <RadioGroup
-        android:layout_width="315dp"
+        android:id="@+id/body_type_radioGroup"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_height">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/closed_body_radioButton"
             android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -112,7 +110,7 @@
             android:textAlignment="center" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
+            android:id="@+id/open_body_radioButton"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -121,5 +119,18 @@
             android:textAlignment="center" />
 
     </RadioGroup>
+
+    <Button
+        android:id="@+id/close_alert_Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/gravity_border_white_primary"
+        android:text="@string/cancel"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/body_type_radioGroup" />
 
 </android.support.constraint.ConstraintLayout>
