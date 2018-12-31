@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="1b5f5f" />
-                            <entry key="outputName" value="ic_credit_card" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/credit-card.svg" />
+                            <entry key="outputName" value="ic_loading" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/loading.svg" />
                           </map>
                         </option>
                       </PersistentState>

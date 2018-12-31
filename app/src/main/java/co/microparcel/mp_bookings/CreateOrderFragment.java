@@ -2,6 +2,7 @@ package co.microparcel.mp_bookings;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,9 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,11 +52,11 @@ public class CreateOrderFragment extends Fragment {
     private final int REQUEST_CODE_PLACEPICKER = 1;
     private BottomNavigationView vehicle_selector_Bar;
     AlertDialog.Builder builder, farebuilder, payment_method;
-    private TextView pickup_location_TextView, drop_location_TextView, vehicle_name_and_type_TextView;
+    private TextView pickup_location_TextView, drop_location_TextView, vehicle_name_and_type_TextView, item_name_TextView, payment_type_name_TextView, is_insurance_there_TextView, loading_unloading_title_TextView;
     private String DistanceResult;
     private String DurationResult;
     private String pickup, drop, bodytype;
-    private ImageView payment_method_main_ImageView;
+    private ImageView payment_method_main_ImageView, select_item_type_ImageView, select_insurance_ImageView, loading_unloading_ImageView;
 
     public CreateOrderFragment() {
         // Required empty public constructor
@@ -61,6 +68,24 @@ public class CreateOrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_create_order, container, false);
+        select_item_type_ImageView = v.findViewById(R.id.select_item_type_ImageView);
+        payment_type_name_TextView = v.findViewById(R.id.payment_type_name_TextView);
+        select_insurance_ImageView = v.findViewById(R.id.select_insurance_ImageView);
+        is_insurance_there_TextView = v.findViewById(R.id.is_insurance_there_TextView);
+        loading_unloading_ImageView = v.findViewById(R.id.loading_unloading_ImageView);
+        loading_unloading_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callLoadingUnloading();
+            }
+        });
+        loading_unloading_title_TextView = v.findViewById(R.id.loading_unloading_title_TextView);
+        select_insurance_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callInsurance();
+            }
+        });
         Reset();
         pickup_location_TextView = v.findViewById(R.id.pickup_location_TextView);
         pickup_location_TextView.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +137,7 @@ public class CreateOrderFragment extends Fragment {
             }
         });
 
+        item_name_TextView = v.findViewById(R.id.item_name_TextView);
 
         fare_estimate_Button = v.findViewById(R.id.fare_estimate_Button);
         fare_estimate_Button.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +162,14 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 callPaymentMethod();
+            }
+        });
+
+        select_item_type_ImageView = v.findViewById(R.id.select_item_type_ImageView);
+        select_item_type_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callGoodsList();
             }
         });
 
@@ -241,7 +275,7 @@ public class CreateOrderFragment extends Fragment {
         builder.setView(mView);
         ImageView vehicle_imageView = mView.findViewById(R.id.vehicle_imageView);
         vehicle_imageView.setImageResource(R.drawable.ic_bike_delivery);
-       // final Button close_aler  t_Button = mView.findViewById(R.id.close_alert_Button);
+        final Button close_alert_Button = mView.findViewById(R.id.close_alert_Button);
         final TextView vehicle_capacity_TextView, vehicle_width, vehicle_height, vehicle_lenght, vehicle_name_TextView;
         vehicle_capacity_TextView = mView.findViewById(R.id.vehicle_capacity_TextView);
         vehicle_width = mView.findViewById(R.id.vehicle_width);
@@ -257,14 +291,16 @@ public class CreateOrderFragment extends Fragment {
         body_type_radioGroup.setVisibility(View.INVISIBLE);
         final AlertDialog dialog = builder.create();
         dialog.show();
-        vehicle_name_and_type_TextView.setText("Delivery Bike");
+        select_item_type_ImageView.setEnabled(false);
+
         dialog.setCancelable(false);
-        /*close_alert_Button.setOnClickListener(new View.OnClickListener() {
+        close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vehicle_name_and_type_TextView.setText("Delivery Bike");
                 dialog.dismiss();
             }
-        });*/
+        });
 
     }
 
@@ -278,8 +314,9 @@ public class CreateOrderFragment extends Fragment {
         vehicle_imageView.setImageResource(R.drawable.ic_loading_delivery);
         final Button close_alert_Button = mView.findViewById(R.id.close_alert_Button);
         final TextView vehicle_capacity_TextView, vehicle_width, vehicle_height, vehicle_lenght, vehicle_name_TextView;
-        RadioGroup body_type_radioGroup;
+        final RadioGroup body_type_radioGroup;
         RadioButton bodyRadio;
+        select_item_type_ImageView.setEnabled(true);
         vehicle_capacity_TextView = mView.findViewById(R.id.vehicle_capacity_TextView);
         vehicle_width = mView.findViewById(R.id.vehicle_width);
         vehicle_height = mView.findViewById(R.id.vehicle_height);
@@ -314,7 +351,13 @@ public class CreateOrderFragment extends Fragment {
         close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (body_type_radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
+                    body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
+                }else {
+                    vehicle_name_and_type_TextView.setText("Loading Rickshaw");
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -326,11 +369,12 @@ public class CreateOrderFragment extends Fragment {
         View mView = layoutInflaterAndroid.inflate(R.layout.select_vehicle_layout, null);
         builder = new AlertDialog.Builder(getContext());
         builder.setView(mView);
+        select_item_type_ImageView.setEnabled(true);
         ImageView vehicle_imageView = mView.findViewById(R.id.vehicle_imageView);
         vehicle_imageView.setImageResource(R.drawable.ic_ace_delivery);
         final Button close_alert_Button = mView.findViewById(R.id.close_alert_Button);
         final TextView vehicle_capacity_TextView, vehicle_width, vehicle_height, vehicle_lenght, vehicle_name_TextView;
-        RadioGroup body_type_radioGroup;
+        final RadioGroup body_type_radioGroup;
         RadioButton closed_body_radioButton, open_body_radioButton;
         vehicle_capacity_TextView = mView.findViewById(R.id.vehicle_capacity_TextView);
         vehicle_width = mView.findViewById(R.id.vehicle_width);
@@ -366,7 +410,13 @@ public class CreateOrderFragment extends Fragment {
         close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (body_type_radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
+                    body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
+                }else {
+                    vehicle_name_and_type_TextView.setText("Tata Ace");
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -379,11 +429,12 @@ public class CreateOrderFragment extends Fragment {
         View mView = layoutInflaterAndroid.inflate(R.layout.select_vehicle_layout, null);
         builder = new AlertDialog.Builder(getContext());
         builder.setView(mView);
+        select_item_type_ImageView.setEnabled(true);
         ImageView vehicle_imageView = mView.findViewById(R.id.vehicle_imageView);
         vehicle_imageView.setImageResource(R.drawable.ic_dost_delivery);
         final Button close_alert_Button = mView.findViewById(R.id.close_alert_Button);
         final TextView vehicle_capacity_TextView, vehicle_width, vehicle_height, vehicle_lenght, vehicle_name_TextView;
-        RadioGroup body_type_radioGroup;
+        final RadioGroup body_type_radioGroup;
         RadioButton closed_body_radioButton, open_body_radioButton;
         vehicle_capacity_TextView = mView.findViewById(R.id.vehicle_capacity_TextView);
         vehicle_width = mView.findViewById(R.id.vehicle_width);
@@ -419,7 +470,13 @@ public class CreateOrderFragment extends Fragment {
         close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (body_type_radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
+                    body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
+                }else {
+                    vehicle_name_and_type_TextView.setText("AL Dost");
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -432,11 +489,12 @@ public class CreateOrderFragment extends Fragment {
         View mView = layoutInflaterAndroid.inflate(R.layout.select_vehicle_layout, null);
         builder = new AlertDialog.Builder(getContext());
         builder.setView(mView);
+        select_item_type_ImageView.setEnabled(true);
         ImageView vehicle_imageView = mView.findViewById(R.id.vehicle_imageView);
         vehicle_imageView.setImageResource(R.drawable.ic_pickup_delivery);
         final Button close_alert_Button = mView.findViewById(R.id.close_alert_Button);
         final TextView vehicle_capacity_TextView, vehicle_width, vehicle_height, vehicle_lenght, vehicle_name_TextView;
-        RadioGroup body_type_radioGroup;
+        final RadioGroup body_type_radioGroup;
         RadioButton bodyTypeRadio;
         vehicle_capacity_TextView = mView.findViewById(R.id.vehicle_capacity_TextView);
         vehicle_width = mView.findViewById(R.id.vehicle_width);
@@ -451,10 +509,12 @@ public class CreateOrderFragment extends Fragment {
                 switch (checkedId){
                     case R.id.open_body_radioButton :
                         bodytype = "with Open Body";
+                        body_type_radioGroup.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                         Toast.makeText(getContext(), "with Open Body", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.closed_body_radioButton :
                         bodytype = "with Closed Body";
+                        body_type_radioGroup.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                         Toast.makeText(getContext(), "with Closed Body", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -472,7 +532,14 @@ public class CreateOrderFragment extends Fragment {
         close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (body_type_radioGroup.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
+                    body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
+                }else {
+                    vehicle_name_and_type_TextView.setText("M Pickup");
+                    dialog.dismiss();
+                }
+
             }
         });
 
@@ -540,6 +607,7 @@ public class CreateOrderFragment extends Fragment {
         builder.setView(mView);
         final AlertDialog dialog = builder.create();
         dialog.show();
+        dialog.setCancelable(false);
         final ImageView cop_ImageView, cod_ImageView, onlinepayment_ImageView;
         cod_ImageView = mView.findViewById(R.id.cod_ImageView);
         cop_ImageView = mView.findViewById(R.id.cop_ImageView);
@@ -547,35 +615,160 @@ public class CreateOrderFragment extends Fragment {
         cop_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              cop_ImageView.setBackground(getResources().getDrawable(R.drawable.nogravity_border_primary));
-              cod_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-              onlinepayment_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+              payment_method_main_ImageView.setImageResource(R.drawable.ic_funds);
+              payment_type_name_TextView.setText("Cash on Pickup");
+              dialog.dismiss();
             }
         });
 
         cod_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cod_ImageView.setBackground(getResources().getDrawable(R.drawable.nogravity_border_primary));
-                cop_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                onlinepayment_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                payment_method_main_ImageView.setImageResource(R.drawable.ic_funds);
+                payment_type_name_TextView.setText("Cash on Delivery");
+                dialog.dismiss();
             }
         });
 
         onlinepayment_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onlinepayment_ImageView.setBackground(getResources().getDrawable(R.drawable.nogravity_border_primary));
-                cop_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                cod_ImageView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                payment_method_main_ImageView.setImageResource(R.drawable.ic_credit);
+                payment_type_name_TextView.setText("Online Payments");
+                dialog.dismiss();
             }
         });
-        Button select_payment_method_Button = mView.findViewById(R.id.select_payment_method_Button);
-        select_payment_method_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+    }
+
+    private void callGoodsList(){
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View mView = layoutInflater.inflate(R.layout.select_material_type, null);
+        builder = new AlertDialog.Builder(getContext());
+        builder.setView(mView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCancelable(false);
+        // Array of strings for ListView Title
+        final String[] listviewTitle = new String[]{
+                "Furniture", "Food & Beverages", "House Shifting", "Machines/Equip./SpareParts", "Wood/Timber/Plywood",
+                "Courier/Packers and Movers", "Vehicles/Automotive Parts", "Chemicals/Paints/Oils", "Tiles/Ceramics/Sanitaryware",
+                "Glassware", "Pipes/Metal Rods > 7ft", "Pipes/Metal Rods < 7ft", "Metal Sheets",
+                "Gas/Commercial Cylinder", "Construction Materials", "Garments/Apparel/Textile", "Electrical/Electronics"
+
+
+        };
+
+
+        final int[] listviewImage = new int[]{
+                R.drawable.ic_bed, R.drawable.ic_fast_food, R.drawable.ic_insurance, R.drawable.ic_assembly, R.drawable.ic_fence,
+                R.drawable.ic_boxg, R.drawable.ic_car, R.drawable.ic_petroleum, R.drawable.ic_toilet, R.drawable.ic_cheers,
+                R.drawable.ic_pipe, R.drawable.ic_pipe, R.drawable.ic_bending, R.drawable.ic_gas, R.drawable.ic_brick, R.drawable.ic_fashion,
+                R.drawable.ic_responsive
+        };
+
+
+        List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+        for (int i = 0; i < 17; i++) {
+            HashMap<String, String> hm = new HashMap<String, String>();
+            hm.put("listview_title", listviewTitle[i]);
+            hm.put("listview_image", Integer.toString(listviewImage[i]));
+            aList.add(hm);
+        }
+
+        String[] from = {"listview_image", "listview_title"};
+        int[] to = {R.id.item_image, R.id.item_title};
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), aList, R.layout.custom_item_layout, from, to);
+        final ListView androidListView = (ListView) mView.findViewById(R.id.items_ListView);
+        androidListView.setAdapter(simpleAdapter);
+        androidListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HashMap<String,String> map =(HashMap<String,String>)androidListView.getItemAtPosition(position);
+                String itemname = map.get("listview_title");
+                item_name_TextView.setText(itemname    );
+                select_item_type_ImageView.setImageResource(listviewImage[position]);
+                dialog.dismiss();
             }
         });
     }
+
+    private void callInsurance(){
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View mView = layoutInflater.inflate(R.layout.insurance_option_alert, null);
+        builder = new AlertDialog.Builder(getContext());
+        builder.setView(mView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCancelable(false);
+        final ImageView no_insurance_ImageView, yes_insurance_ImageView;
+        no_insurance_ImageView = mView.findViewById(R.id.no_insurance_ImageView);
+        yes_insurance_ImageView = mView.findViewById(R.id.yes_insurance_ImageView);
+        no_insurance_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select_insurance_ImageView.setImageResource(R.drawable.ic_no_insurance);
+                is_insurance_there_TextView.setText("No Insurance");
+                dialog.dismiss();
+            }
+        });
+
+        yes_insurance_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select_insurance_ImageView.setImageResource(R.drawable.ic_yes_insurance);
+                is_insurance_there_TextView.setText("Yes Insurance");
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void callLoadingUnloading(){
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View mView = layoutInflater.inflate(R.layout.loading_unloading_alert, null);
+        builder = new AlertDialog.Builder(getContext());
+        builder.setView(mView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        ImageView nolu_ImageView, l_ImageView, u_ImageView, l_u_ImageView;
+        nolu_ImageView = mView.findViewById(R.id.nolu_ImageView);
+        l_ImageView = mView.findViewById(R.id.l_ImageView);
+        u_ImageView = mView.findViewById(R.id.u_ImageView);
+        l_u_ImageView = mView.findViewById(R.id.l_u_ImageView);
+        nolu_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading_unloading_ImageView.setImageResource(R.drawable.ic_boxg);
+                loading_unloading_title_TextView.setText("No Loading/Unlaoding");
+                dialog.dismiss();
+            }
+        });
+        l_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
+                loading_unloading_title_TextView.setText("Loading Only");
+                dialog.dismiss();
+            }
+        });
+        u_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
+                loading_unloading_title_TextView.setText("Unloading Only");
+                dialog.dismiss();
+            }
+        });
+        l_u_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
+                loading_unloading_title_TextView.setText("Laoding and Unloading");
+                dialog.dismiss();
+            }
+        });
+
+    }
+
 }
