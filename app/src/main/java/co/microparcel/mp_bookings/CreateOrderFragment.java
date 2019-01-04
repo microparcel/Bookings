@@ -51,7 +51,7 @@ public class CreateOrderFragment extends Fragment {
     private int location_switch, vehicle_switch;
     private final int REQUEST_CODE_PLACEPICKER = 1;
     private BottomNavigationView vehicle_selector_Bar;
-    AlertDialog.Builder builder, farebuilder, payment_method;
+    AlertDialog.Builder builder, farebuilder, payment_method, weightbuilder;
     private TextView pickup_location_TextView, drop_location_TextView, vehicle_name_and_type_TextView, item_name_TextView, payment_type_name_TextView, is_insurance_there_TextView, loading_unloading_title_TextView;
     private String DistanceResult;
     private String DurationResult;
@@ -689,9 +689,21 @@ public class CreateOrderFragment extends Fragment {
                 String itemname = map.get("listview_title");
                 item_name_TextView.setText(itemname    );
                 select_item_type_ImageView.setImageResource(listviewImage[position]);
+                LayoutInflater layoutInflaterweight = LayoutInflater.from(getContext());
+                View mView = layoutInflaterweight.inflate(R.layout.custom_weight_alert, null);
+                weightbuilder = new AlertDialog.Builder(getContext());
+                weightbuilder.setView(mView);
+                final AlertDialog weightdialog = weightbuilder.create();
+                weightdialog.show();
                 dialog.dismiss();
+
+
+
             }
         });
+
+
+
     }
 
     private void callInsurance(){
@@ -769,6 +781,15 @@ public class CreateOrderFragment extends Fragment {
             }
         });
 
+    }
+
+    private void callCustomWeight(){
+        LayoutInflater layoutInflaterweight = LayoutInflater.from(getContext());
+        View mView = layoutInflaterweight.inflate(R.layout.custom_weight_alert, null);
+        weightbuilder = new AlertDialog.Builder(getContext());
+        weightbuilder.setView(mView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

@@ -68,5 +68,12 @@
     <string name="proceed_now">Proceed Now</string>
     <string name="item">Item</string>
     <string name="insure_goods_during_this_trip_up_to_5_00_lakhs_at_an_attractive_premium_of_12_0">Insure goods during this trip up to ₹5.00 lakhs at an attractive premium of ₹12.0</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="mp_money">MP Money</string>
+    <string name="connect_paytm">Connect Paytm</string>
+    <string name="rate_card">Rate card</string>
+    <string name="support">Support</string>
+    <string name="about_us">About Us</string>
+    <string name="logout">Logout</string>
 
 </resources>

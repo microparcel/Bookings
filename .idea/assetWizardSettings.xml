@@ -3,11 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState />
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -23,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/app/extra/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_settings_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/app/extra/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_edit_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,9 +29,9 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="1b5f5f" />
-                            <entry key="outputName" value="ic_loading" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/loading.svg" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_paytm" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/paytm_icon-icons.com_65483.svg" />
                           </map>
                         </option>
                       </PersistentState>
