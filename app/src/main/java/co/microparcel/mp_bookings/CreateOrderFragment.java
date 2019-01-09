@@ -2,7 +2,6 @@ package co.microparcel.mp_bookings;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
@@ -48,14 +46,17 @@ public class CreateOrderFragment extends Fragment {
 
     View v;
     Button fare_estimate_Button;
-    private int location_switch, vehicle_switch;
+    private int location_switch, vehicle_switch, loaduoload_switch = 012;
     private final int REQUEST_CODE_PLACEPICKER = 1;
     private BottomNavigationView vehicle_selector_Bar;
     AlertDialog.Builder builder, farebuilder, payment_method, weightbuilder;
     private TextView pickup_location_TextView, drop_location_TextView, vehicle_name_and_type_TextView, item_name_TextView, payment_type_name_TextView, is_insurance_there_TextView, loading_unloading_title_TextView;
     private String DistanceResult;
     private String DurationResult;
-    private String pickup, drop, bodytype;
+    private double goodsweight;
+    private double loadingunloading;
+    TextView estimate_cost_amount_TextView, km_TextView, loading_cost, carrier_fare_TextView, roundoff_TextView, total_amt_TextView;
+    private String pickup, drop, bodytype, estFare, estkm;
     private ImageView payment_method_main_ImageView, select_item_type_ImageView, select_insurance_ImageView, loading_unloading_ImageView;
 
     public CreateOrderFragment() {
@@ -64,7 +65,7 @@ public class CreateOrderFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_create_order, container, false);
@@ -152,10 +153,40 @@ public class CreateOrderFragment extends Fragment {
                     drop_location_TextView.setError("Select drop location!");
                     return;
                 }
+
+                String vehicletype = vehicle_name_and_type_TextView.getText().toString().trim();
+                if (vehicletype.equals("Select Vehicle")){
+                    Toast.makeText(getContext(), "Please select vehicle type!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String itemname = item_name_TextView.getText().toString().trim();
+                if (itemname.equals("Goods Type")){
+                    Toast.makeText(getContext(), "Please select goods type!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String paymenttype = payment_type_name_TextView.getText().toString().trim();
+                if (paymenttype.equals("Payment Method")){
+                    Toast.makeText(getContext(), "Please select payment type!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String lounlo = loading_unloading_title_TextView.getText().toString().trim();
+                if (lounlo.equals("Loading/Unloading")){
+                    Toast.makeText(getContext(), "Please select loading option!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String insurance = is_insurance_there_TextView.getText().toString().trim();
+                if (insurance.equals("Insurance")){
+                    Toast.makeText(getContext(), "Please select insurance option!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 SearchDistanceCommand(v);
                 callFare();
             }
         });
+
+
 
         payment_method_main_ImageView = v.findViewById(R.id.payment_method_main_ImageView);
         payment_method_main_ImageView.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +288,64 @@ public class CreateOrderFragment extends Fragment {
 
             if (DistanceResult.indexOf("km") != -1) {
                 DistanceResult = DistanceResult.replaceAll("[^\\d.]", "");
-                Toast.makeText(getContext(), DistanceResult + " " + DurationResult, Toast.LENGTH_SHORT).show();
+                double km = Double.parseDouble(DistanceResult);
+                if (vehicle_switch == 1){
+                    float carrierfare = (float) (((km-1.0)*7)+30);
+                    double carrierfare_round = Math.round(carrierfare);
+                    double loadingcost = loadingunloading;
+                    double totalpayable = carrierfare_round+loadingcost;
+                    estimate_cost_amount_TextView.setText(String.format("₹ %s", totalpayable));
+                    carrier_fare_TextView.setText(String.format("₹ %s", carrierfare));
+                    roundoff_TextView.setText(String.format("₹ %s", carrierfare_round));
+                    loading_cost.setText(String.format("₹ %s", loadingcost));
+                    total_amt_TextView.setText(String.format("₹ %s", totalpayable));
+
+                }
+                if (vehicle_switch == 2){
+                    float carrierfare = (float) ((km-3.0)*22)+180;
+                    double carrierfare_round = Math.round(carrierfare);
+                    double loadingcost = loadingunloading;
+                    double totalpayable = carrierfare_round+loadingcost;
+                    estimate_cost_amount_TextView.setText(String.format("₹ %s", totalpayable));
+                    carrier_fare_TextView.setText(String.format("₹ %s", carrierfare));
+                    roundoff_TextView.setText(String.format("₹ %s", carrierfare_round));
+                    loading_cost.setText(String.format("₹ %s", loadingcost));
+                    total_amt_TextView.setText(String.format("₹ %s", totalpayable));
+                }
+                if (vehicle_switch == 3){
+                    float carrierfare = (float) ((km-3.0)*29)+250;
+                    double carrierfare_round = Math.round(carrierfare);
+                    double loadingcost = loadingunloading;
+                    double totalpayable = carrierfare_round+loadingcost;
+                    estimate_cost_amount_TextView.setText(String.format("₹ %s", totalpayable));
+                    carrier_fare_TextView.setText(String.format("₹ %s", carrierfare));
+                    roundoff_TextView.setText(String.format("₹ %s", carrierfare_round));
+                    loading_cost.setText(String.format("₹ %s", loadingcost));
+                    total_amt_TextView.setText(String.format("₹ %s", totalpayable));
+                }
+                if (vehicle_switch == 4){
+                    float carrierfare = (float) ((km-3.0)*34)+300;
+                    double carrierfare_round = Math.round(carrierfare);
+                    double loadingcost = loadingunloading;
+                    double totalpayable = carrierfare_round+loadingcost;
+                    estimate_cost_amount_TextView.setText(String.format("₹ %s", totalpayable));
+                    carrier_fare_TextView.setText(String.format("₹ %s", carrierfare));
+                    roundoff_TextView.setText(String.format("₹ %s", carrierfare_round));
+                    loading_cost.setText(String.format("₹ %s", loadingcost));
+                    total_amt_TextView.setText(String.format("₹ %s", totalpayable));
+                }
+                if (vehicle_switch == 5){
+                    float carrierfare = (float) ((km-3.0)*42)+400;
+                    double carrierfare_round = Math.round(carrierfare);
+                    double loadingcost = loadingunloading;
+                    double totalpayable = carrierfare_round+loadingcost;
+                    estimate_cost_amount_TextView.setText(String.format("₹ %s", totalpayable));
+                    carrier_fare_TextView.setText(String.format("₹ %s", carrierfare));
+                    roundoff_TextView.setText(String.format("₹ %s", carrierfare_round));
+                    loading_cost.setText(String.format("₹ %s", loadingcost));
+                    total_amt_TextView.setText(String.format("₹ %s", totalpayable));
+                }
+
             } else {
                 Toast.makeText(getContext(), "Can't serve distance under 100 meters.", Toast.LENGTH_SHORT).show();
             }
@@ -355,7 +443,7 @@ public class CreateOrderFragment extends Fragment {
                     Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
                     body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
                 }else {
-                    vehicle_name_and_type_TextView.setText("Loading Rickshaw");
+                    vehicle_name_and_type_TextView.setText("Loading Rickshaw "+bodytype);
                     dialog.dismiss();
                 }
             }
@@ -414,7 +502,7 @@ public class CreateOrderFragment extends Fragment {
                     Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
                     body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
                 }else {
-                    vehicle_name_and_type_TextView.setText("Tata Ace");
+                    vehicle_name_and_type_TextView.setText("Tata Ace "+bodytype);
                     dialog.dismiss();
                 }
             }
@@ -474,7 +562,7 @@ public class CreateOrderFragment extends Fragment {
                     Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
                     body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
                 }else {
-                    vehicle_name_and_type_TextView.setText("AL Dost");
+                    vehicle_name_and_type_TextView.setText("AL Dost "+bodytype);
                     dialog.dismiss();
                 }
             }
@@ -528,7 +616,7 @@ public class CreateOrderFragment extends Fragment {
         body_type_radioGroup.setVisibility(View.VISIBLE);
         final AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.setCancelable(false);
+        dialog.setCancelable(false);loadingunloading = 0.35*goodsweight;
         close_alert_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -536,7 +624,7 @@ public class CreateOrderFragment extends Fragment {
                     Toast.makeText(getContext(), "Please select body type !", Toast.LENGTH_SHORT).show();
                     body_type_radioGroup.setBackground(getResources().getDrawable(R.drawable.nogravity_border_red));
                 }else {
-                    vehicle_name_and_type_TextView.setText("M Pickup");
+                    vehicle_name_and_type_TextView.setText("M Pickup "+bodytype);
                     dialog.dismiss();
                 }
 
@@ -549,7 +637,6 @@ public class CreateOrderFragment extends Fragment {
     private void startPlacePickerActivity() {
         PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
         // this would only work if you have your Google Places API working
-
         try {
             Intent intent = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -598,6 +685,13 @@ public class CreateOrderFragment extends Fragment {
         farebuilder.setView(mView);
         final AlertDialog dialog = farebuilder.create();
         dialog.show();
+        estimate_cost_amount_TextView = mView.findViewById(R.id.estimate_cost_amount_TextView);
+        km_TextView = mView.findViewById(R.id.km_TextView);
+        loading_cost = mView.findViewById(R.id.loading_cost);
+        carrier_fare_TextView = mView.findViewById(R.id.carrier_fare_TextView);
+        roundoff_TextView = mView.findViewById(R.id.roundoff_TextView);
+        total_amt_TextView = mView.findViewById(R.id.total_amt_TextView);
+
     }
 
     private void callPaymentMethod(){
@@ -687,14 +781,32 @@ public class CreateOrderFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String,String> map =(HashMap<String,String>)androidListView.getItemAtPosition(position);
                 String itemname = map.get("listview_title");
-                item_name_TextView.setText(itemname    );
+                item_name_TextView.setText(itemname);
                 select_item_type_ImageView.setImageResource(listviewImage[position]);
                 LayoutInflater layoutInflaterweight = LayoutInflater.from(getContext());
-                View mView = layoutInflaterweight.inflate(R.layout.custom_weight_alert, null);
+                final View mView = layoutInflaterweight.inflate(R.layout.custom_weight_alert, null);
                 weightbuilder = new AlertDialog.Builder(getContext());
                 weightbuilder.setView(mView);
                 final AlertDialog weightdialog = weightbuilder.create();
                 weightdialog.show();
+                Button goods_weight_Button = mView.findViewById(R.id.goods_weight_Button);
+                goods_weight_Button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText custom_weight_EditText = mView.findViewById(R.id.custom_weight_EditText);
+                        goodsweight = Double.parseDouble(custom_weight_EditText.getText().toString().trim());
+                        if (loaduoload_switch == 0){
+                            loadingunloading = 0.0*goodsweight;
+                        }
+                        if (loaduoload_switch == 1){
+                            loadingunloading = 0.35*goodsweight;
+                        }
+                        if (loaduoload_switch == 2){
+                            loadingunloading = 0.7*goodsweight;
+                        }
+                        weightdialog.dismiss();
+                    }
+                });
                 dialog.dismiss();
 
 
@@ -753,6 +865,7 @@ public class CreateOrderFragment extends Fragment {
             public void onClick(View v) {
                 loading_unloading_ImageView.setImageResource(R.drawable.ic_boxg);
                 loading_unloading_title_TextView.setText("No Loading/Unlaoding");
+                loaduoload_switch = 0;
                 dialog.dismiss();
             }
         });
@@ -761,6 +874,8 @@ public class CreateOrderFragment extends Fragment {
             public void onClick(View v) {
                 loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
                 loading_unloading_title_TextView.setText("Loading Only");
+                loaduoload_switch = 1;
+                oneside_loading();
                 dialog.dismiss();
             }
         });
@@ -769,6 +884,8 @@ public class CreateOrderFragment extends Fragment {
             public void onClick(View v) {
                 loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
                 loading_unloading_title_TextView.setText("Unloading Only");
+                loaduoload_switch = 1;
+                oneside_loading();
                 dialog.dismiss();
             }
         });
@@ -777,19 +894,19 @@ public class CreateOrderFragment extends Fragment {
             public void onClick(View v) {
                 loading_unloading_ImageView.setImageResource(R.drawable.ic_loading);
                 loading_unloading_title_TextView.setText("Laoding and Unloading");
+                loaduoload_switch = 2;
+                twoside_loading();
                 dialog.dismiss();
             }
         });
 
     }
-
-    private void callCustomWeight(){
-        LayoutInflater layoutInflaterweight = LayoutInflater.from(getContext());
-        View mView = layoutInflaterweight.inflate(R.layout.custom_weight_alert, null);
-        weightbuilder = new AlertDialog.Builder(getContext());
-        weightbuilder.setView(mView);
-        final AlertDialog dialog = builder.create();
-        dialog.show();
+    private void oneside_loading(){
+        loadingunloading = 0.35*goodsweight;
     }
+    private void twoside_loading(){
+        loadingunloading = 0.7*goodsweight;
+    }
+
 
 }

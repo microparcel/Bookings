@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/custom_weight_TextView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/goods_weight_Button"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:background="@drawable/gravity_border_white_primary"
@@ -54,8 +54,8 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="265dp"
+        android:layout_height="47dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -64,7 +64,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="*Don't know the weight, our driver will help and charge for it as per the weight."
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/goods_weight_Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_weight_EditText" />
